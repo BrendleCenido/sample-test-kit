@@ -4,7 +4,7 @@ import {StyleSheet,View,Text, TextInput,TouchableOpacity, Image} from  "react-na
 export default function TabOneScreen() {
   return (
     <View style={styles.container}>
-      <Image source = {require('C:/Users/Brendle Cenido/OneDrive/Documents/BSIT 2-1A (2nd Sem)/APPLICATION DEV/PROJECTS/sample-test-kit/assets/images/LOGIN.png')} 
+      <Image source = {{uri:'https://cdn-icons-png.flaticon.com/512/4128/4128176.png'}}
       style={styles.imageIcon}/>
       <Text style={styles.Login}>Welcome!</Text>
       <TextInput style={styles.inputText}
