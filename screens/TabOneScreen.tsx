@@ -21,13 +21,25 @@ export default function TabOneScreen() {
       behavior="padding"
     >
       <View style={{
-        marginTop: 30
+        marginTop: 10
       }}>
-        <Ionicons 
-          name="chevron-back-circle-outline" 
-          size={35} 
-          color="black" 
-        />
+        <Button
+              buttonStyle={{
+                backgroundColor: '#98C1D9'
+              }}
+              containerStyle={{
+                width: 100,
+                marginHorizontal: -30,
+                marginVertical: 10,
+                marginBottom: 10,
+              }}
+              icon = {<Ionicons 
+                name="chevron-back-circle-outline" 
+                size={50} 
+                color="black"
+              />}
+          />
+        
       </View>
       <View style={styles.Lottielogo}>
         <LottieView
