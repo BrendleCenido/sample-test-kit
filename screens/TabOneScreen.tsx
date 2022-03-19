@@ -1,44 +1,37 @@
 import React, { useState } from "react";
-import { View, Image, Text, Dimensions, StyleSheet, Alert, Keyboard, KeyboardAvoidingView,  } from "react-native";
+import { View, Image, Text, Dimensions, StyleSheet, Alert, Keyboard, KeyboardAvoidingView} from "react-native";
 import {Button, colors} from "react-native-elements";
 import LottieView from 'lottie-react-native';
 import { TextInput } from 'react-native-paper';
+import { Ionicons } from '@expo/vector-icons';
 
 
 export default function TabOneScreen() {
   const [email, setEmail] = useState<string>("");
-  const [password, setPasssword] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [repassword, setRepassword] = useState<string>("");
+  const [name, setName] = useState<string>("");
+  const [phone, setPhone] = useState<string>("");
   const [visible, setVisible] = useState<boolean>(true);
-  const [loading, setLoading] = useState<boolean>(false); 
 
-  const handleLogin = () => {
-    const EMAIL_ADDRESS = "cenido.brendle@gmail.com";
-    const PASSWORD = "12345";
-    setLoading(true);
-
-    setTimeout(() => {
-      setLoading(false);
-      if (email === EMAIL_ADDRESS && password === PASSWORD){ 
-        return Alert.alert(
-          "LOG IN",
-          'Successfully logged in!'
-        )
-      }
-  
-      Alert.alert(
-        "INVALID CREDENTIALS",
-        "Please enter a correct username and password",
-      )
-    }, 500);
-  }
 
   return (
-    <View
+    <KeyboardAvoidingView
       style={styles.Container}
+      behavior="padding"
     >
+      <View style={{
+        marginTop: 30
+      }}>
+        <Ionicons 
+          name="chevron-back-circle-outline" 
+          size={35} 
+          color="black" 
+        />
+      </View>
       <View style={styles.Lottielogo}>
         <LottieView
-          source={require('../assets/images/72342-welcome.json')}
+          source={require('../assets/images/53395-login.json')}
           autoPlay={true}
           loop={true}
         />
@@ -46,15 +39,67 @@ export default function TabOneScreen() {
 
       <View style={{
         flex: 1,
-        top: -80
+        top: -140
       }}>
         <View style={{
           flex: 0,
-          marginBottom: 20
+          marginBottom: 5
         }}>
-          <Text style={styles.Login}>Welcome!</Text>
+          <Text style={styles.Login}>Sign-up</Text>
+          <View style={{
+          flex: 0,
+          marginBottom: 5
+        }}>
           <TextInput
-            label = "Email"
+            label = "Full Name" 
+            value={name}
+            onChangeText={text => setName(text)}
+            autoComplete = {false}
+            mode = {"flat"}
+            right={
+            <TextInput.Icon 
+            name= "pen"
+            color = {"#3D5A80"}
+            disabled = {true}
+            />}
+            theme={{
+              colors: {
+                placeholder: '#293241',
+                primary: '#293241',
+                background: '#E0FBFC'
+              }
+            }}
+        />
+        </View>
+
+        <View style={{
+          flex: 0,
+          marginBottom: 5
+        }}>
+          <TextInput
+            label = "Phone number" 
+            value={phone}
+            onChangeText={text => setPhone(text)}
+            autoComplete = {false}
+            mode = {"flat"}
+            right={
+            <TextInput.Icon 
+            name= "phone"
+            color = {"#3D5A80"}
+            disabled = {true}
+            />}
+            theme={{
+              colors: {
+                placeholder: '#293241',
+                primary: '#293241',
+                background: '#E0FBFC'
+              }
+            }}
+        />
+        </View>
+
+          <TextInput
+            label = "E-mail address"
             value={email}
             onChangeText={text => setEmail(text)}
             autoComplete = {false}
@@ -62,11 +107,11 @@ export default function TabOneScreen() {
             keyboardType = {"email-address"}
             mode = {"flat"}
             right = {
-              <TextInput.Icon 
-              name="email" 
-              size={24} 
-              color="black"
-              disabled = {true}
+              <TextInput.Icon  
+                name="email-edit" 
+                size={24} 
+                color="black" 
+                disabled = {true}
               />
             }
             theme={{
@@ -81,12 +126,12 @@ export default function TabOneScreen() {
 
         <View style={{
           flex: 0,
-          marginBottom: 40
+          marginBottom: 5
         }}>
           <TextInput
-            label = "Password" 
+            label = "Create a Password" 
             value={password}
-            onChangeText={text => setPasssword(text)}
+            onChangeText={text => setPassword(text)}
             autoComplete = {false}
             mode = {"flat"}
             right={
@@ -110,6 +155,35 @@ export default function TabOneScreen() {
 
         <View style={{
           flex: 0,
+          marginBottom: 40
+        }}>
+          <TextInput
+            label = "Re-enter your password" 
+            value={repassword}
+            onChangeText={text => setRepassword(text)}
+            autoComplete = {false}
+            mode = {"flat"}
+            right={
+            <TextInput.Icon 
+            name= {visible ? "eye-off" : "eye"}
+            color = {"#3D5A80"}
+            onPress={() => {
+              setVisible(!visible)
+            }}
+            />}
+            secureTextEntry={visible}
+            theme={{
+              colors: {
+                placeholder: '#293241',
+                primary: '#293241',
+                background: '#E0FBFC'
+              }
+            }}
+        />
+      </View>
+
+        <View style={{
+          flex: 0,
         }}>
 
           <View style={{
@@ -118,7 +192,7 @@ export default function TabOneScreen() {
             alignItems: 'center',
           }}>
             <Button
-              title="LOG IN"
+              title="CREATE ACCOUNT"
               buttonStyle={{
                 backgroundColor: '#EF795F',
                 borderWidth: 2,
@@ -126,7 +200,7 @@ export default function TabOneScreen() {
                 borderRadius: 30,
               }}
               containerStyle={{
-                width: 200,
+                width: 300,
                 marginHorizontal: 50,
                 marginVertical: 10,
                 marginBottom: 30,
@@ -134,8 +208,6 @@ export default function TabOneScreen() {
               titleStyle={{ fontWeight: 'bold',
                color: '#e0fbfc'
               }}
-              onPress = {handleLogin}
-              loading = {loading}
             />
           </View>
 
@@ -150,11 +222,8 @@ export default function TabOneScreen() {
         borderRadius: 10,
         paddingBottom: 20,
       }}>
-        <Text style={styles.Signup}>
-          No account yet?
-        </Text>
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -168,20 +237,14 @@ const styles = StyleSheet.create({
      fontSize: 30,
       textAlign: 'center',
       margin: 18,
-      fontFamily: 'poppins-bold',
+      fontFamily: 'poppins-regular',
       color: 'black'
-  },
-  Signup: {
-    fontFamily: 'poppins-regular',
-    fontSize: 20,
-    top: -20
   },
   Lottielogo: {
     flex: 1,
     height: '100%',
-    width: '100%',
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: -20
+    width: '50%',
+    marginLeft: 80,
+    marginTop: -120
   }
 });
