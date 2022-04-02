@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Image, Text, Dimensions, StyleSheet, Alert, Keyboard, KeyboardAvoidingView, ScrollView} from "react-native";
 import {Button, colors} from "react-native-elements";
 import LottieView from 'lottie-react-native';
@@ -7,29 +7,50 @@ import { Ionicons } from '@expo/vector-icons';
 import { Formik } from "formik";
 import * as yup from 'yup';
 import ViewWithLoading from "../components/ViewWithLoading";
-import { isLoading } from "expo-font";
+
 
 
 export default function TabOneScreen() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [repassword, setRepassword] = useState<string>("");
-  const [name, setName] = useState<string>("");
-  const [phone, setPhone] = useState<string>("");
+  const [conPassword, setconPassword] = useState<string>("");
+  const [firstname, setFirstname] = useState<string>("");
+  const [lastname, setLastname] = useState<string>("");
   const [visible, setVisible] = useState<boolean>(true);
+  const [loading, setLoading] = useState(false);
 
 
 const registerSchema = yup.object({
-  email: yup.string().required('Email is required').matches(/htrhtjytjyt7/, 'Invalid email'),
-  password: yup.string().required('Password is required')
+  email: yup.string().required('Email is required').matches(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)$/, 'Invalid email'),
+  password: yup.string().required('Password is required'),
+  conPassword: yup.string().required('Confirm your password')
 });
+
+useEffect(() => {
+  setLoading(true);
+  setTimeout(() => {
+    setLoading(false);
+  }, 1000);
+}, []);
+
+const handleRegister = () => {
+   
+  if (password === conPassword){
+     Alert.alert("Registered");
+  }
+  else{
+    Alert.alert("Error", "Passwords do not match");
+  }
+  
+}
 
 return (
   <ViewWithLoading loading={loading}>
     <Formik 
       initialValues={{
       email: '',
-      password: ''
+      password: '',
+      conPassword: ''
       }}
       onSubmit={(values, action) => {
         console.log(values);
@@ -77,14 +98,14 @@ return (
                   marginTop: -100,
                   top: 100
             }}>
-                  <View style={{
+                <View style={{
                   flex: 0,
                   marginBottom: 5
                 }}>
                   <TextInput
                     label = "First Name" 
-                    value={name}
-                    onChangeText={text => setName(text)}
+                    value={firstname}
+                    onChangeText={text => setFirstname(text)}
                     autoComplete = {false}
                     mode = {"flat"}
                     right={
@@ -108,8 +129,8 @@ return (
                 }}>
                   <TextInput
                     label = "Last Name" 
-                    value={phone}
-                    onChangeText={text => setPhone(text)}
+                    value={lastname}
+                    onChangeText={text => setLastname(text)}
                     autoComplete = {false}
                     mode = {"flat"}
                     right={
@@ -140,6 +161,7 @@ return (
                     autoCapitalize = {"none"}
                     keyboardType = {"email-address"}
                     mode = {"flat"}
+                    error={errors.email !== undefined}
                     right = {
                       <TextInput.Icon  
                         name="email-edit" 
@@ -156,7 +178,12 @@ return (
                       }
                     }}
                 />
-                </View>
+                {errors.email &&
+                  <Text style={{marginVertical: 10, color: 'red'}}>
+                    {errors.email}
+                  </Text>
+                } 
+            </View>
         
                 <View style={{
                   flex: 0,
@@ -167,7 +194,9 @@ return (
                     value={password}
                     onChangeText={text => setPassword(text)}
                     autoComplete = {false}
+                    keyboardType = {"email-address"}
                     mode = {"flat"}
+                    error={errors.password !== undefined}
                     right={
                     <TextInput.Icon 
                     name= {visible ? "eye-off" : "eye"}
@@ -185,6 +214,11 @@ return (
                       }
                     }}
                 />
+                 {errors.password &&
+                    <Text style={{marginVertical: 10, color: 'red'}}>
+                        {errors.password}
+                    </Text>
+                } 
                 </View>
         
                 <View style={{
@@ -193,12 +227,14 @@ return (
                 }}>
                   <TextInput
                     label = "Confirm Password" 
-                    value={repassword}
-                    onChangeText={text => setRepassword(text)}
+                    value={conPassword}
+                    onChangeText={text => setconPassword(text)}
                     autoComplete = {false}
+                    keyboardType = {"email-address"}
                     mode = {"flat"}
+                    error={errors.conPassword !== undefined}
                     right={
-                    <TextInput.Icon 
+                    <TextInput.Icon
                     name= {visible ? "eye-off" : "eye"}
                     color = {"#3D5A80"}
                     onPress={() => {
@@ -214,6 +250,11 @@ return (
                       }
                     }}
                 />
+                {errors.conPassword &&
+                  <Text style={{marginVertical: 10, color: 'red'}}>
+                    {errors.conPassword}
+                  </Text>
+                } 
                 </View>
             </ScrollView>
         
@@ -239,7 +280,8 @@ return (
                       titleStyle={{ fontWeight: 'bold',
                        color: '#e0fbfc'
                       }}
-                    />
+                      onPress={() => handleRegister()}>
+                    </Button>
                   </View>
               </View>
             </View>
