@@ -8,8 +8,6 @@ import { Formik } from "formik";
 import * as yup from 'yup';
 import ViewWithLoading from "../components/ViewWithLoading";
 
-
-
 export default function TabOneScreen() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -18,7 +16,6 @@ export default function TabOneScreen() {
   const [lastname, setLastname] = useState<string>("");
   const [visible, setVisible] = useState<boolean>(true);
   const [loading, setLoading] = useState(false);
-
 
 const registerSchema = yup.object({
   email: yup.string().required('Email is required').matches(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)$/, 'Invalid email'),
@@ -29,7 +26,7 @@ const registerSchema = yup.object({
 useEffect(() => {
   setLoading(true);
   setTimeout(() => {
-    setLoading(false);
+  setLoading(false);
   }, 1000);
 }, []);
 
@@ -62,7 +59,6 @@ return (
               style={styles.Container}
             >
               <View style={{
-                marginTop: 10
               }}>
                 <Button
                       buttonStyle={{
@@ -93,10 +89,10 @@ return (
                 top: -140
               }}>
                 <Text style={styles.Login}>Sign-up</Text>
-            <ScrollView style={{
+          <ScrollView style={{
                   flex: 1,
                   marginTop: -100,
-                  top: 100
+                  top: 100,
             }}>
                 <View style={{
                   flex: 0,
@@ -155,8 +151,8 @@ return (
                 }}>
                   <TextInput
                     label = "E-mail address"
-                    value={email}
-                    onChangeText={text => setEmail(text)}
+                    value={values.email}
+                    onChangeText={handleChange('email')} 
                     autoComplete = {false}
                     autoCapitalize = {"none"}
                     keyboardType = {"email-address"}
@@ -191,8 +187,8 @@ return (
                 }}>
                   <TextInput
                     label = "Password" 
-                    value={password}
-                    onChangeText={text => setPassword(text)}
+                    value={values.password}
+                    onChangeText={handleChange('password')} 
                     autoComplete = {false}
                     keyboardType = {"email-address"}
                     mode = {"flat"}
@@ -227,8 +223,8 @@ return (
                 }}>
                   <TextInput
                     label = "Confirm Password" 
-                    value={conPassword}
-                    onChangeText={text => setconPassword(text)}
+                    value={values.conPassword}
+                    onChangeText={handleChange('conPassword')} 
                     autoComplete = {false}
                     keyboardType = {"email-address"}
                     mode = {"flat"}

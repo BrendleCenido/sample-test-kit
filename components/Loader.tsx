@@ -1,13 +1,17 @@
 import * as React from 'react';
 import { ActivityIndicator, PixelRatio, StyleSheet, View } from 'react-native';
+import LottieView from 'lottie-react-native';
 
 
 export default function Loader() {
     return (
         <View style={styles.fullScreen}>
-            <View style={styles.container}>
-                <ActivityIndicator size="large" color="#fff" />
-            </View>
+            <LottieView
+                source={require('../assets/images/98788-loading.json')}
+                autoPlay= {true}
+                loop = {true}
+                style= {{flex: 1}}
+            />
         </View>
     );
 }
